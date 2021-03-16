@@ -99,4 +99,70 @@ public class Main {
 		}
 		return retVal;
 	}
+	
+	public static String SCleaner(String data) {
+		data = data.toLowerCase();
+		String retVal="";
+		for(int i = 0; i < data.length(); i++) {
+			char ch = data.charAt(i);
+			if(Character.isLetter(ch) || Character.isWhitespace(ch) || Character.toString(ch).equals("@") || 
+					Character.toString(ch).equals("#")) {
+				retVal += String.valueOf(ch);
+			}else {
+				retVal += " ";
+			}
+		}
+		retVal  = WordString(retVal);
+		return retVal;
+	}
+	
+	public static ArrayList<String> TwoWords(String sentence){
+		ArrayList<String> res = new ArrayList<>();
+		ArrayList<String> container = new ArrayList<>();
+		StringTokenizer str_tok = new StringTokenizer(sentence);
+		
+		while(str_tok.hasMoreTokens()) {
+			container.add(str_tok.nextToken());
+		}
+		Collections.sort(container);
+		
+		for(int i = 0; i < container.size(); i++) {
+			for(int j = (i+1); j<container.size(); j++) {
+				String unify = (container.get(i)+" "+ container.get(j));
+				if(!res.contains(unify) && !container.get(i).equals(container.get(j))) {
+					res.add(unify);
+				}
+			}
+		}
+		return res;
+		
+	}
+	
+	public static ArrayList<String> ThreeWords(String sentence){
+		ArrayList<String> res = new ArrayList<>();
+		ArrayList<String> container = new ArrayList<>();
+		StringTokenizer str_tok = new StringTokenizer(sentence);
+		
+		while(str_tok.hasMoreTokens()) {
+			container.add(str_tok.nextToken());
+		}
+		Collections.sort(container);
+		
+		for(int i = 0; i < container.size(); i++) {
+			for(int j = (i+1); j<container.size(); j++) {
+				for(int k = (j+1); k<container.size(); k++) {
+					String unify = (container.get(i)+" "+ container.get(j));
+					if(!res.contains(unify) && !container.get(i).equals(container.get(j)) 
+							&& !container.get(i).equals(container.get(k)) && !container.get(j).equals(container.get(k)) ) {
+						res.add(unify);
+					}
+					
+				}
+				
+			}
+		}
+		return res;
+		
+	}
+	
 }
