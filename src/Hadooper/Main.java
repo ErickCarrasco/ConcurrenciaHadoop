@@ -54,7 +54,7 @@ public class Main {
         }catch(Exception e){
             e.printStackTrace();
         }
-        System.out.println("Dictionary Successfully Loaded! Words Loaded: "+Dictionary.size());
+        System.out.println("Dictionary Loaded, number of words : "+Dictionary.size());
         return Dictionary;
         
     }
@@ -140,32 +140,6 @@ public class Main {
 		
 	}
 	
-	public static ArrayList<String> ThreeWords(String sentence){
-		ArrayList<String> res = new ArrayList<>();
-		ArrayList<String> container = new ArrayList<>();
-		StringTokenizer str_tok = new StringTokenizer(sentence);
-		
-		while(str_tok.hasMoreTokens()) {
-			container.add(str_tok.nextToken());
-		}
-		Collections.sort(container);
-		
-		for(int i = 0; i < container.size(); i++) {
-			for(int j = (i+1); j<container.size(); j++) {
-				for(int k = (j+1); k<container.size(); k++) {
-					String unify = (container.get(i)+" "+ container.get(j)+ " "+container.get(k));
-					if(!res.contains(unify) && !container.get(i).equals(container.get(j)) 
-							&& !container.get(i).equals(container.get(k)) && !container.get(j).equals(container.get(k)) ) {
-						res.add(unify);
-					}
-					
-				}
-				
-			}
-		}
-		return res;
-		
-	}
 	
 	public static void runPreproces(String[] args) {
 		JobConf conf = new JobConf(Preproc.class);

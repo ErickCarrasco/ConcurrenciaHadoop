@@ -19,20 +19,17 @@ public class Frequency {
 		private final static IntWritable one = new IntWritable(1);
         private Text word = new Text();
         private Text TwoWords = new Text();
-        private Text ThreeWords = new Text();
         public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
             String line = value.toString();
             ArrayList<String> TwoWordsTokens = Main.TwoWords(line);
-            ArrayList<String> ThreeWordsTokens = Main.ThreeWords(line);
+
             StringTokenizer tokenizer = new StringTokenizer(line);
+            
             for (int i = 0; i < TwoWordsTokens.size(); i++) {
                 TwoWords.set(TwoWordsTokens.get(i).toString());
                 output.collect(TwoWords, one);
             }
-            for (int i = 0; i < ThreeWordsTokens.size(); i++) {
-                ThreeWords.set(ThreeWordsTokens.get(i).toString());
-                output.collect(ThreeWords, one);
-            }
+            
             while (tokenizer.hasMoreTokens()) {
                 word.set(tokenizer.nextToken());
                 output.collect(word, one);
