@@ -19,7 +19,12 @@ import org.apache.hadoop.util.*;
 public class Main {
 	
 	static ArrayList<String> EnglishDictionary = LoadEnglishDictionary();
-	
+	public static void main(String[] args) {
+		
+		runPreproces(args);
+		runFrequency(args);
+		
+	}
 	public static ArrayList<String> LoadEnglishDictionary() {
         ArrayList<String> Dictionary = new ArrayList<>();
         File file = null;
@@ -27,7 +32,7 @@ public class Main {
         BufferedReader br = null;
         try {
             
-            file = new File("/src/words.txt");
+            file = new File("/home/erick/Documents/Tests/ConcurrenciaHadoop/src/words.txt");
             
                 //creates a new file instance  
             fr = new FileReader(file);   //reads the file  
@@ -151,7 +156,7 @@ public class Main {
 		for(int i = 0; i < container.size(); i++) {
 			for(int j = (i+1); j<container.size(); j++) {
 				for(int k = (j+1); k<container.size(); k++) {
-					String unify = (container.get(i)+" "+ container.get(j));
+					String unify = (container.get(i)+" "+ container.get(j)+ " "+container.get(k));
 					if(!res.contains(unify) && !container.get(i).equals(container.get(j)) 
 							&& !container.get(i).equals(container.get(k)) && !container.get(j).equals(container.get(k)) ) {
 						res.add(unify);
@@ -163,6 +168,55 @@ public class Main {
 		}
 		return res;
 		
+	}
+	
+	public static void runPreproces(String[] args) {
+		JobConf conf = new JobConf(Preproc.class);
+        conf.setJobName("Preprocess");
+        FileInputFormat.setInputPaths(conf, new Path(args[0]));
+        FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+        conf.setNumReduceTasks(0);
+
+        conf.setMapperClass(Preproc.Preprocessor.class);
+
+        conf.setInputFormat(TextInputFormat.class);
+        conf.setOutputFormat(TextOutputFormat.class);
+
+        conf.setOutputKeyClass(Text.class);
+        conf.setOutputValueClass(NullWritable.class);
+        conf.setInputFormat(TextInputFormat.class);
+        conf.setOutputFormat(TextOutputFormat.class);
+
+        try {
+            JobClient.runJob(conf);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public static void runFrequency(String[] args) {
+		JobConf conf = new JobConf(Frequency.class);
+        conf.setJobName("Frequencies");
+        FileInputFormat.setInputPaths(conf, new Path(args[1]));
+        FileOutputFormat.setOutputPath(conf, new Path(args[2]));
+
+        conf.setMapperClass(Frequency.Map.class);
+        conf.setCombinerClass(Frequency.Reduce.class);
+        conf.setReducerClass(Frequency.Reduce.class);
+
+        conf.setInputFormat(TextInputFormat.class);
+        conf.setOutputFormat(TextOutputFormat.class);
+
+        conf.setOutputKeyClass(Text.class);
+        conf.setOutputValueClass(IntWritable.class);
+        conf.setInputFormat(TextInputFormat.class);
+        conf.setOutputFormat(TextOutputFormat.class);
+
+        try {
+            JobClient.runJob(conf);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 	
 }
