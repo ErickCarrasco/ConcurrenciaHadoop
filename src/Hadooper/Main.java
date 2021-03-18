@@ -18,14 +18,14 @@ import org.apache.hadoop.util.*;
 
 public class Main {
 	
-	static ArrayList<String> EnglishDictionary = LoadEnglishDictionary();
+	static ArrayList<String> EnglishDictionary = LoadDictionary();
 	public static void main(String[] args) {
 		
 		runPreproces(args);
 		runFrequency(args);
 		
 	}
-	public static ArrayList<String> LoadEnglishDictionary() {
+	public static ArrayList<String> LoadDictionary() {
         ArrayList<String> Dictionary = new ArrayList<>();
         File file = null;
         FileReader fr = null;
@@ -33,19 +33,16 @@ public class Main {
         try {
             
             file = new File("/home/erick/Documents/Tests/ConcurrenciaHadoop/src/words.txt");
-            
-                //creates a new file instance  
-            fr = new FileReader(file);   //reads the file  
-            br = new BufferedReader(fr);  //creates a buffering character input stream      
+
+            fr = new FileReader(file);   
+            br = new BufferedReader(fr);      
             String line;
 
             while ((line = br.readLine()) != null) {    
                 String[] word = line.split(" "); 
-                //System.out.println("word length "+word.length+" word: "+line);
-                //System.out.println("Load word"+word[0]+"lmao");
                 Dictionary.add(word[0].toLowerCase());
             }
-            fr.close();    //closes the stream and release the resources  
+            fr.close();    
             
         } catch (IOException e) {
             e.printStackTrace();
