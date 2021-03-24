@@ -25,8 +25,8 @@ public class Frequency {
 
             StringTokenizer tokenizer = new StringTokenizer(line);
             //los tw_tokenizers tienen un offset de 1 palabra entre si
-            StringTokenizer tw_tokenizer1 = new StringTokenizer(line,"(?<!\\G\\S+)\\s");//regex para cada otro espacio
-            StringTokenizer tw_tokenizer2 = new StringTokenizer(line.split(" ",2)[2],"(?<!\\G\\S+)\\s");
+            StringTokenizer tw_tokenizer1 = new StringTokenizer(line,"(?<!\\G(\\S+|\\N+))(\\s|\\n)");//regex para cada otro espacio
+            StringTokenizer tw_tokenizer2 = new StringTokenizer(line.split(" ",2)[2],"(?<!\\G(\\S+|\\N+))(\\s|\\n)");
 
             //for (int i = 0; i < TwoWordsTokens.size(); i++) {
             //    TwoWords.set(TwoWordsTokens.get(i).toString());
@@ -39,15 +39,16 @@ public class Frequency {
             }
             while (tw_tokenizer1.hasMoreTokens()) {
                 String count_test = tw_tokenizer1.nextToken();
-                if(count_test.indexOf(' ')!=-1){
+                if(count_test.indexOf(' ')!=-1 || count_test.indexOf('\n')!=-1){
+                    count_test = count_test.replace('\n', ' ');
                     twoWords.set(count_test);
                     output.collect(twoWords, one);
                 }
             }
             while (tw_tokenizer2.hasMoreTokens()) {
                 String count_test = tw_tokenizer2.nextToken();
-                if(count_test.indexOf(' ')!=-1){
-                    twoWords.set(count_test);
+                if(count_test.indexOf(' ')!=-1 || count_test.indexOf('\n')!=-1){
+                    count_test = count_test.replace('\n', ' ');
                     output.collect(twoWords, one);
                 }
             }

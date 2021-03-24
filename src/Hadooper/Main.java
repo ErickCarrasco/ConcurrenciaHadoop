@@ -32,7 +32,7 @@ public class Main {
         BufferedReader br = null;
         try {
             
-            file = new File("/home/erick/Documents/Tests/ConcurrenciaHadoop/src/words.txt");
+            file = new File("/home/andres/Documents/ProyectoConcu/part-00001.txt");
 
             fr = new FileReader(file);   
             br = new BufferedReader(fr);      
