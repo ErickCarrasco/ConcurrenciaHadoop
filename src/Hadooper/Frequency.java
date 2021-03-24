@@ -24,33 +24,24 @@ public class Frequency {
             //ArrayList<String> TwoWordsTokens = Main.TwoWords(line);
 
             StringTokenizer tokenizer = new StringTokenizer(line);
-            //los tw_tokenizers tienen un offset de 1 palabra entre si
-            StringTokenizer tw_tokenizer1 = new StringTokenizer(line,"(?<!\\G(\\S+|\\N+))(\\s|\\n)");//regex para cada otro espacio
-            StringTokenizer tw_tokenizer2 = new StringTokenizer(line.split(" ",2)[2],"(?<!\\G(\\S+|\\N+))(\\s|\\n)");
-
-            //for (int i = 0; i < TwoWordsTokens.size(); i++) {
-            //    TwoWords.set(TwoWordsTokens.get(i).toString());
-            //    output.collect(TwoWords, one);
-            //}
             
+            //1 word
             while (tokenizer.hasMoreTokens()) {
                 word.set(tokenizer.nextToken());
                 output.collect(word, one);
             }
-            while (tw_tokenizer1.hasMoreTokens()) {
-                String count_test = tw_tokenizer1.nextToken();
-                if(count_test.indexOf(' ')!=-1 || count_test.indexOf('\n')!=-1){
-                    count_test = count_test.replace('\n', ' ');
-                    twoWords.set(count_test);
-                    output.collect(twoWords, one);
-                }
+            
+            //2 words
+            StringTokenizer tw_tokenizer = new StringTokenizer(line);
+            String word1 ="", word2="";
+            if(tw_tokenizer.hasMoreTokens()) {
+            	word1 = tw_tokenizer.nextToken();
             }
-            while (tw_tokenizer2.hasMoreTokens()) {
-                String count_test = tw_tokenizer2.nextToken();
-                if(count_test.indexOf(' ')!=-1 || count_test.indexOf('\n')!=-1){
-                    count_test = count_test.replace('\n', ' ');
-                    output.collect(twoWords, one);
-                }
+            while (tw_tokenizer.hasMoreTokens()) {
+                word2 = tw_tokenizer.nextToken();
+                twoWords.set(word1 + " " + word2);
+                output.collect(twoWords, one);
+                word1=word2;
             }
         }
 	}
