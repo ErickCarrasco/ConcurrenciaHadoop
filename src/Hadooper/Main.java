@@ -21,7 +21,7 @@ public class Main {
 	static ArrayList<String> EnglishDictionary = LoadDictionary();
 	public static void main(String[] args) {
 		
-		runPreproces(args);
+		//runPreproces(args);
 		runFrequency(args);
 		
 	}
@@ -118,27 +118,27 @@ public class Main {
 		return retVal;
 	}
 	
-	public static ArrayList<String> TwoWords(String sentence){
-		ArrayList<String> res = new ArrayList<>();
-		ArrayList<String> container = new ArrayList<>();
-		StringTokenizer str_tok = new StringTokenizer(sentence);
-		
-		while(str_tok.hasMoreTokens()) {
-			container.add(str_tok.nextToken());
-		}
-		Collections.sort(container);
-		
-		for(int i = 0; i < container.size(); i++) {
-			for(int j = (i+1); j<container.size(); j++) {
-				String unify = (container.get(i)+" "+ container.get(j));
-				if(!res.contains(unify) && !container.get(i).equals(container.get(j))) {
-					res.add(unify);
-				}
-			}
-		}
-		return res;
-		
-	}
+	//public static ArrayList<String> TwoWords(String sentence){
+	//	ArrayList<String> res = new ArrayList<>();
+	//	ArrayList<String> container = new ArrayList<>();
+	//	StringTokenizer str_tok = new StringTokenizer(sentence);
+	//	
+	//	while(str_tok.hasMoreTokens()) {
+	//		container.add(str_tok.nextToken());
+	//	}
+	//	Collections.sort(container);
+	//	
+	//	for(int i = 0; i < container.size(); i++) {
+	//		for(int j = (i+1); j<container.size(); j++) {
+	//			String unify = (container.get(i)+" "+ container.get(j));
+	//			if(!res.contains(unify) && !container.get(i).equals(container.get(j))) {
+	//				res.add(unify);
+	//			}
+	//		}
+	//	}
+	//	return res;
+	//	
+	//}
 	
 	
 	public static void runPreproces(String[] args) {
